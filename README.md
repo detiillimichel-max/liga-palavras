@@ -1,63 +1,25 @@
-# Dado-trilha 🎲 - Jogo de Tabuleiro
+# 🔤 Liga palavras 
 
-> Jogo educativo de tabuleiro com dados para crianças. Ande pelas 20 trilhas coloridas, desvie das cobras 🐍, suba nas escadas 🪜 e colete estrelas!
+**Você consegue resolver todos eles?**
 
-![Jogo](https://img.shields.io/badge/jogo-HTML5-brightgreen) ![Crianças](https://img.shields.io/badge/idade-5+-blue) ![Fases](https://img.shields.io/badge/fases-20-orange)
+Jogo de palavras estilo Wordscapes, feito em português do Brasil. Arraste as letras na roda e forme todas as palavras escondidas.
 
-**▶️ Jogar Agora:** https://detiillimichel-max.github.io/Dado-trilha/
+🎮 **Jogar agora:** https://detiillimichel-max.github.io/letroso-cross/
 
----
+## ✨ Como funciona
+- Arraste o dedo ligando as letras na roda
+- Forme palavras de 3+ letras
+- Complete os quadradinhos roxos no topo
+- Ganhe moedas a cada acerto
 
-## 🎮 Como Jogar
+## 🚀 Recursos
+- 20 níveis curados (SOL, LOBO, CASA, TRILHA...)
+- **Nível 21+ infinito** — o jogo gera novas fases automaticamente
+- Letras em **posições diferentes a cada fase** (embaralha sozinho)
+- Dicas, moedas e progresso salvo
+- Funciona no celular, sem instalar nada
 
-**20 fases = 20 tabuleiros mágicos diferentes!**
+## 🛠️ Tecnologias
+HTML5 + CSS3 + JavaScript puro (1 arquivo só)
 
-1. Toque em **"🎲 Rolar Dado"**
-2. Seu foguete 🚀 anda o número de casas
-3. Caia em casas especiais e ganhe prêmios!
-
-### 🟦 Tipos de Casa
-
-- **· Normal**: continue jogando
-- **⭐ Estrela**: +15 pontos
-- **🪙 Moeda**: +2 moedas
-- **⚠️ Armadilha**: perde 1 vida ❤️
-- **🔀 Bifurcação**: escolha seu caminho!
-    - ⚡ **Atalho**: anda +3 casas
-    - 🛡️ **Seguro**: ganha +15 pontos
-- **🪜 Escada**: sobe e ganha +10 pontos
-- **🐍 Cobra**: desce e perde -5 pontos
-- **🚩 Início** e **🏆 Fim**
-
-### ❤️ Vidas
-
-Comece com 3 corações. Cuidado com as armadilhas!
-
-### 🛒 Lojinha Mágica
-
-Compre com suas estrelas ⭐:
-
-- **🎲 Dado Extra** (20⭐): jogue de novo
-- **🛡️ Escudo** (25⭐): protege de armadilha
-- **🚀 Foguete** (15⭐): anda 2 casas
-- **💖 Coração** (40⭐): ganha 1 vida
-- **🍀 Trevo** (18⭐): bônus na rota segura
-
-### 🏆 Fim de Fase
-
-Chegou no 🏆? Ganha bônus de pontos!
-
-**Completou as 20 fases?** Você vira **MESTRE DA TRILHA** e o jogo cria 20 trilhas novas!
-
----
-
-## 🎨 Visual Infantil
-
-Tabuleiro colorido inspirado em jogos clássicos:
-- Casas vermelhas e azuis alternadas
-- Cobras e escadas animadas
-- Design para crianças de 5+ anos
-
----
-
-## 📂 Arquivos
+Feito com ❤️ por Michel Detilli
