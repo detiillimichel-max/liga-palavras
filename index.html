@@ -3,60 +3,53 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Trilha do Tabuleiro</title>
+<title>Trilha Mágica</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header>
   <div class="hud">
-    <span>🏁 Fase <b id="fase">1</b>/20</span>
-    <span>⭐ <b id="pontos">0</b></span>
+    <span>🏁 <b id="fase">1</b>/20</span>
+    <span>⭐ <b id="pts">0</b></span>
     <span>🪙 <b id="moedas">0</b></span>
     <span id="vidas">❤️❤️❤️</span>
   </div>
-  <h1>TRILHA DO TABULEIRO</h1>
+  <h1>TRILHA MÁGICA</h1>
 </header>
-
 <main>
-  <div id="tabuleiro" class="tabuleiro"></div>
-
-  <div class="controles">
-    <button id="rolar" class="dado">🎲 Rolar Dado</button>
-    <button id="loja" class="loja">🛒 Loja</button>
+  <div style="position:relative;margin-top:28px">
+    <div class="tema-nome" id="tema">Floresta</div>
+    <div id="tabuleiro"></div>
   </div>
-
-  <div id="mensagem" class="mensagem">Bem-vindo à trilha!</div>
-  <div id="dado-result" class="dado-result"></div>
+  <div class="botoes">
+    <button id="rolar">🎲 ROLAR DADO</button>
+    <button id="loja">🛒 LOJA</button>
+  </div>
+  <div id="msg">Toque em ROLAR para começar!</div>
 </main>
 
-<div id="fork-modal" class="modal hidden">
-  <div class="modal-box">
-    <h2>🔀 Bifurcação!</h2>
-    <p>Escolha seu caminho:</p>
-    <button id="atalho">⚡ Atalho (+3 casas)</button>
-    <button id="seguro">🛡️ Rota Segura (+15⭐)</button>
-  </div>
-</div>
+<div id="fork" class="modal hidden"><div class="box">
+  <h2>🔀 BIFURCAÇÃO!</h2>
+  <button id="atalho">⚡ ATALHO (+3)</button>
+  <button id="seguro">🛡️ SEGURO (+15)</button>
+</div></div>
 
-<div id="loja-modal" class="modal hidden">
-  <div class="modal-box">
-    <h2>🛒 Loja</h2>
-    <button data-item="dado">🎲 Dado Extra - 20⭐</button>
-    <button data-item="escudo">🛡️ Escudo - 25⭐</button>
-    <button data-item="impulso">🚀 Impulso - 15⭐</button>
-    <button data-item="vida">💖 Vida - 40⭐</button>
-    <button data-item="trevo">🍀 Trevo - 18⭐</button>
-    <button class="fechar">Fechar</button>
-  </div>
-</div>
+<div id="lojaM" class="modal hidden"><div class="box">
+  <h2>🛒 LOJA</h2>
+  <p>Estrelas: <b id="ptsLoja">0</b></p>
+  <button data-i="1">🎲 Dado Extra - 20⭐</button>
+  <button data-i="2">🛡️ Escudo - 25⭐</button>
+  <button data-i="3">🚀 Turbo - 15⭐</button>
+  <button data-i="4">💖 Vida - 40⭐</button>
+  <button data-i="5">🍀 Trevo - 18⭐</button>
+  <button id="fechaL" class="sec">Fechar</button>
+</div></div>
 
-<div id="fim-modal" class="modal hidden">
-  <div class="modal-box">
-    <h2 id="fim-titulo">🏆 Fase Concluída!</h2>
-    <p id="fim-texto"></p>
-    <button id="proxima">Próxima Trilha</button>
-  </div>
-</div>
+<div id="fim" class="modal hidden"><div class="box">
+  <h2 id="fimT">🏆 FASE COMPLETA!</h2>
+  <p id="fimP"></p>
+  <button id="prox">PRÓXIMA →</button>
+</div></div>
 
 <script src="script.js"></script>
 </body>
