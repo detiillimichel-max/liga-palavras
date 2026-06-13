@@ -2,9 +2,46 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Trilha Mágica</title>
-<link rel="stylesheet" href="style.css">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>Trilha Mágica - 20 Fases</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'Comic Sans MS',system-ui;background:linear-gradient(180deg,#87CEEB 0%,#98FB98 50%,#FFD93D 100%);min-height:100vh;overflow-x:hidden}
+header{background:linear-gradient(180deg,#FF6B6B,#E63946);padding:10px 8px 14px;text-align:center;color:white;box-shadow:0 4px 12px rgba(0,0,0,.3);position:sticky;top:0;z-index:10}
+.hud{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:4px;font-weight:800;font-size:13px;background:rgba(0,0,0,.15);padding:6px;border-radius:10px;margin-bottom:6px}
+.hud span{background:rgba(255,255,255,.2);padding:4px 6px;border-radius:6px}
+h1{font-size:20px;color:#FFD93D;text-shadow:2px 2px 0 #8B0000,0 0 8px #FF6B6B;letter-spacing:1px}
+main{padding:10px;max-width:520px;margin:0 auto}
+#tabuleiro{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;background:linear-gradient(145deg,#fff,#f0f0f0);padding:8px;border-radius:20px;border:5px solid #4ECDC4;box-shadow:0 8px 0 #2A9D8F,0 12px 20px rgba(0,0,0,.2);min-height:360px;position:relative}
+.casa{aspect-ratio:1;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-direction:column;font-weight:900;color:white;position:relative;border:3px solid rgba(255,255,255,.8);box-shadow:inset 0 -4px 0 rgba(0,0,0,.2),0 2px 4px rgba(0,0,0,.2);font-size:24px;transition:all.3s cubic-bezier(.34,1.56,.64,1);cursor:pointer}
+.casa.num{position:absolute;top:2px;left:4px;font-size:9px;opacity:.9;background:rgba(0,0,0,.4);padding:1px 4px;border-radius:4px;font-weight:700}
+.casa.ativa{transform:scale(1.12) translateY(-4px);z-index:5;outline:4px solid #FFD93D;box-shadow:0 0 20px #FFD93D,inset 0 -4px 0 rgba(0,0,0,.2);animation:pulsa 1s infinite}
+@keyframes pulsa{0%,100%{box-shadow:0 0 20px #FFD93D}50%{box-shadow:0 0 30px #FFD93D}}
+.token{position:absolute;top:-14px;font-size:28px;filter:drop-shadow(0 3px 3px rgba(0,0,0,.5));animation:flutua 1.2s ease-in-out infinite;z-index:10}
+@keyframes flutua{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.casa.inicio{background:linear-gradient(135deg,#06D6A0,#118AB2)!important}
+.casa.fim{background:linear-gradient(135deg,#FFD60A,#FF8500)!important;animation:brilha 2s infinite}
+@keyframes brilha{0%,100%{filter:brightness(1)}50%{filter:brightness(1.3)}}
+.botoes{display:grid;grid-template-columns:1.3fr 1fr;gap:8px;margin-top:14px}
+button{padding:16px 10px;border:none;border-radius:14px;font-weight:900;font-size:16px;cursor:pointer;border-bottom:5px solid rgba(0,0,0,.25);transition:all.1s;box-shadow:0 4px 8px rgba(0,0,0,.2);font-family:inherit}
+button:active{transform:translateY(3px);border-bottom-width:2px;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+#rolar{background:linear-gradient(180deg,#FFD93D,#F4A261);color:#5C3D00;font-size:18px}
+#rolar:disabled{opacity:.6;filter:grayscale(.5)}
+#loja{background:linear-gradient(180deg,#4ECDC4,#118AB2);color:white}
+#msg{background:white;margin-top:12px;padding:14px;border-radius:14px;text-align:center;font-weight:800;color:#D00000;min-height:50px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 0 #ddd;font-size:15px;line-height:1.3}
+.dado-girando{animation:gira 0.5s linear infinite;display:inline-block}
+@keyframes gira{to{transform:rotate(360deg)}}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:100;padding:20px;animation:aparece.3s}
+.modal.hidden{display:none}
+@keyframes aparece{from{opacity:0}to{opacity:1}}
+.box{background:white;padding:26px;border-radius:24px;width:100%;max-width:340px;text-align:center;border:6px solid #FF6B6B;box-shadow:0 12px 0 #C92A2A,0 20px 40px rgba(0,0,0,.4);animation:sobe.4s cubic-bezier(.34,1.56,.64,1)}
+@keyframes sobe{from{transform:translateY(40px) scale(.9);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
+.box h2{color:#FF6B6B;margin-bottom:14px;font-size:22px}
+.box p{margin-bottom:16px;color:#555;line-height:1.4}
+.box button{width:100%;margin:7px 0;padding:14px;background:linear-gradient(180deg,#4ECDC4,#118AB2);color:white;font-size:15px}
+.box button.sec{background:linear-gradient(180deg,#adb5bd,#6c757d)}
+.tema-nome{position:absolute;top:-28px;left:50%;transform:translateX(-50%);background:#FF6B6B;color:white;padding:4px 14px;border-radius:20px;font-size:12px;font-weight:800;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+</style>
 </head>
 <body>
 <header>
@@ -18,39 +55,155 @@
 </header>
 <main>
   <div style="position:relative;margin-top:28px">
-    <div class="tema-nome" id="tema">Floresta</div>
+    <div class="tema-nome" id="tema">Floresta Encantada</div>
     <div id="tabuleiro"></div>
   </div>
   <div class="botoes">
     <button id="rolar">🎲 ROLAR DADO</button>
     <button id="loja">🛒 LOJA</button>
   </div>
-  <div id="msg">Toque em ROLAR para começar!</div>
+  <div id="msg">Toque em ROLAR DADO para começar sua aventura!</div>
 </main>
+<div id="fork" class="modal hidden">
+  <div class="box">
+    <h2>🔀 BIFURCAÇÃO!</h2>
+    <p>Dois caminhos apareceram na trilha:</p>
+    <button id="atalho">⚡ ATALHO<br><small>Avança 3 casas • +5 ⭐</small></button>
+    <button id="seguro">🛡️ ROTA SEGURA<br><small>Avança 1 casa • +15 ⭐</small></button>
+  </div>
+</div>
 
-<div id="fork" class="modal hidden"><div class="box">
-  <h2>🔀 BIFURCAÇÃO!</h2>
-  <button id="atalho">⚡ ATALHO (+3)</button>
-  <button id="seguro">🛡️ SEGURO (+15)</button>
-</div></div>
+<div id="lojaM" class="modal hidden">
+  <div class="box">
+    <h2>🛒 LOJINHA MÁGICA</h2>
+    <p>Suas estrelas: <b id="ptsLoja">0</b> ⭐</p>
+    <button data-i="1">🎲 Dado Extra - 20⭐<br><small>Jogue novamente</small></button>
+    <button data-i="2">🛡️ Escudo Mágico - 25⭐<br><small>Protege 1 armadilha</small></button>
+    <button data-i="3">🚀 Turbo - 15⭐<br><small>Avança 2 casas</small></button>
+    <button data-i="4">💖 Coração - 40⭐<br><small>+1 vida</small></button>
+    <button data-i="5">🍀 Trevo - 18⭐<br><small>+10 na rota segura</small></button>
+    <button id="fechaL" class="sec">Fechar Loja</button>
+  </div>
+</div>
 
-<div id="lojaM" class="modal hidden"><div class="box">
-  <h2>🛒 LOJA</h2>
-  <p>Estrelas: <b id="ptsLoja">0</b></p>
-  <button data-i="1">🎲 Dado Extra - 20⭐</button>
-  <button data-i="2">🛡️ Escudo - 25⭐</button>
-  <button data-i="3">🚀 Turbo - 15⭐</button>
-  <button data-i="4">💖 Vida - 40⭐</button>
-  <button data-i="5">🍀 Trevo - 18⭐</button>
-  <button id="fechaL" class="sec">Fechar</button>
-</div></div>
+<div id="fim" class="modal hidden">
+  <div class="box">
+    <h2 id="fimT">🏆 FASE COMPLETA!</h2>
+    <p id="fimP"></p>
+    <div id="recompensa" style="background:#FFF9C4;padding:10px;border-radius:10px;margin:10px 0;font-weight:700"></div>
+    <button id="prox">PRÓXIMA TRILHA →</button>
+  </div>
+</div>
 
-<div id="fim" class="modal hidden"><div class="box">
-  <h2 id="fimT">🏆 FASE COMPLETA!</h2>
-  <p id="fimP"></p>
-  <button id="prox">PRÓXIMA →</button>
-</div></div>
+<script>
+let fase=1,pts=0,moedas=0,vidas=3,pos=0,tab=[],escudo=false,trevo=false,dadoExtra=false,jogando=false;
+const $=i=>document.getElementById(i);
+const cores=['#FF6B6B','#4ECDC4','#FFD93D','#9B5DE5','#06D6A0','#F4A261','#118AB2','#EF476F'];
+const temas=[
+  {n:'Floresta Encantada',c1:'#2D6A4F',c2:'#95D5B2'},
+  {n:'Deserto Dourado',c1:'#BC6C25',c2:'#FEFAE0'},
+  {n:'Oceano Profundo',c1:'#03045E',c2:'#00B4D8'},
+  {n:'Montanha Gelada',c1:'#6C757D',c2:'#DEE2E6'},
+  {n:'Vulcão Flamejante',c1:'#9D0208',c2:'#FFBA08'},
+    {n:'Cidade Futurista',c1:'#3A0CA3',c2:'#4CC9F0'},
+  {n:'Selva Misteriosa',c1:'#386641',c2:'#A7C957'},
+  {n:'Espaço Sideral',c1:'#240046',c2:'#9D4EDD'},
+  {n:'Praia Tropical',c1:'#0077B6',c2:'#90E0EF'},
+  {n:'Castelo Mágico',c1:'#6A040F',c2:'#F48C06'},
+  {n:'Fábrica de Doces',c1:'#FF006E',c2:'#FFBE0B'},
+  {n:'Pântano Sombrio',c1:'#283618',c2:'#606C38'},
+  {n:'Ilha Pirata',c1:'#8B4513',c2:'#DAA520'},
+  {n:'Jardim Secreto',c1:'#588157',c2:'#DAD7CD'},
+  {n:'Caverna Cristal',c1:'#5E548E',c2:'#BE95C4'},
+  {n:'Circo Colorido',c1:'#E63946',c2:'#F1C453'},
+  {n:'Fazenda Feliz',c1:'#8A5A44',c2:'#FED9B7'},
+  {n:'Laboratório',c1:'#2B2D42',c2:'#8D99AE'},
+  {n:'Reino do Gelo',c1:'#CAF0F8',c2:'#90E0EF'},
+  {n:'Templo Dourado',c1:'#99582A',c2:'#FFE6A7'}
+];
 
-<script src="script.js"></script>
+function salvar(){localStorage.setItem('trilha',JSON.stringify({fase,pts,moedas,vidas}));}
+function carregar(){const s=localStorage.getItem('trilha');if(s){const d=JSON.parse(s);fase=d.fase;pts=d.pts;moedas=d.moedas;vidas=d.vidas;}}
+
+function novoTab(){
+  carregar();
+  const tema=temas[(fase-1)%20];
+  $('tema').textContent=tema.n;
+  $('tema').style.background=tema.c1;
+  document.body.style.background=`linear-gradient(180deg,${tema.c2} 0%,${tema.c1} 100%)`;
+  const tam=24+Math.floor(Math.random()*9)+(fase>10?3:0);
+  tab=[];
+  for(let i=0;i<tam;i++){
+    let t='n'; if(i==0)t='i'; else if(i==tam-1)t='f';
+    else{const r=Math.random(); const arm=0.12+(fase*0.005); if(r<0.10)t='b'; else if(r<0.20)t='m'; else if(r<0.20+arm)t='a'; else if(r<0.32+arm)t='k';}
+    tab.push({t,i,s:null});
+  }
+  const numEspeciais=3+Math.floor(fase/5);
+  for(let i=0;i<numEspeciais;i++){
+    let a=Math.floor(2+Math.random()*(tam-8));
+    let b=a+4+Math.floor(Math.random()*6);
+    if(b<tam-1 &&!tab[a].s) tab[a].s=b;
+    let c=Math.floor(6+Math.random()*(tam-10));
+    let d=c-3-Math.floor(Math.random()*4);
+    if(d>1 &&!tab[c].s) tab[c].s=d;
+  }
+  pos=0; desenha(); $('msg').textContent=`Trilha ${fase}: ${tema.n}! Boa sorte!`;
+  }
+ function desenha(){
+  const tb=$('tabuleiro'); tb.innerHTML='';
+  const cols=tab.length>30?7:6; tb.style.gridTemplateColumns=`repeat(${cols},1fr)`;
+  tab.forEach((c,i)=>{
+    const d=document.createElement('div'); d.className='casa '+c.t; d.style.background=cores[i%cores.length];
+    let ic='·'; if(c.t=='i')ic='🚩'; if(c.t=='f')ic='🏆'; if(c.t=='b')ic='⭐'; if(c.t=='m')ic='🪙'; if(c.t=='a')ic='⚠️'; if(c.t=='k')ic='🔀';
+    if(c.s!=null)ic=c.s>i?'🪜':'🐍';
+    d.innerHTML=`<span class="num">${i+1}</span>${ic}`;
+    if(i==pos){d.classList.add('ativa'); d.innerHTML+=`<span class="token">🚀</span>`;}
+    tb.appendChild(d);
+  });
+  $('fase').textContent=fase; $('pts').textContent=pts; $('moedas').textContent=moedas;
+  $('vidas').textContent='❤️'.repeat(vidas)+'🖤'.repeat(3-vidas);
+  $('ptsLoja').textContent=pts; salvar();
+}
+
+async function andar(n){
+  if(jogando)return; jogando=true; $('rolar').disabled=true;
+  $('msg').innerHTML=`<span class="dado-girando">🎲</span> Andando ${n} casas...`;
+  for(let i=0;i<n;i++){
+    if(pos<tab.length-1){pos++; desenha(); await new Promise(r=>setTimeout(r,380));}
+    const c=tab[pos];
+    if(c.s!=null){const sobe=c.s>pos; $('msg').innerHTML=sobe?'🪜 <b>ESCALADA!</b> Subindo!':'🐍 <b>COBRA!</b> Descendo!'; pos=c.s; pts+=sobe?12:-7; moedas+=sobe?1:0; desenha(); await new Promise(r=>setTimeout(r,700));}
+  }
+  const c=tab[pos];
+  if(c.t=='b'){pts+=15+Math.floor(fase/2);moedas++;$('msg').innerHTML='⭐ <b>ESTRELA MÁGICA!</b> +'+(15+Math.floor(fase/2))+' pontos';}
+  else if(c.t=='m'){const g=2+Math.floor(Math.random()*2);pts+=6;moedas+=g;$('msg').innerHTML=`🪙 <b>TESOURO!</b> +${g} moedas`;}
+  else if(c.t=='a'){if(escudo){escudo=false;$('msg').innerHTML='🛡️ <b>ESCUDO ATIVADO!</b> Você foi protegido';}else{vidas--; $('msg').innerHTML='⚠️ <b>ARMADILHA!</b> Perdeu 1 vida'; if(vidas<=0){$('msg').innerHTML='💀 <b>FIM DE JOGO!</b> Reiniciando...'; setTimeout(()=>{fase=1;pts=0;moedas=0;vidas=3;localStorage.clear();novoTab();},2000);}}}
+  else if(c.t=='k'){$('fork').classList.remove('hidden');jogando=false;return;}
+  else if(c.t=='f'){const bonus=fase*25+50; pts+=bonus; moedas+=5; $('fimT').textContent=fase>=20?'👑 MESTRE DA TRILHA!':'🏆 FASE '+fase+' COMPLETA!'; $('fimP').textContent=`Você completou a ${temas[(fase-1)%20].n}!`; $('recompensa').innerHTML=`+${bonus} ⭐ estrelas<br>+5 🪙 moedas`; $('fim').classList.remove('hidden');}
+  else{$('msg').innerHTML='✓ Casa segura. Role novamente!';}
+  desenha();
+  if(dadoExtra && c.t!='f' && c.t!='k'){dadoExtra=false;$('msg').innerHTML+='<br>🎲 <b>DADO EXTRA!</b> Jogue de novo!';}
+  $('rolar').disabled=false; jogando=false;
+}
+
+$('rolar').onclick=()=>{if(jogando)return; const d=1+Math.floor(Math.random()*6); andar(d);};
+$('atalho').onclick=()=>{$('fork').classList.add('hidden');pos=Math.min(pos+3,tab.length-1);pts+=5;$('msg').innerHTML='⚡ <b>ATALHO!</b> Você foi esperto!';desenha();$('rolar').disabled=false;jogando=false;};
+$('seguro').onclick=()=>{$('fork').classList.add('hidden');pos=Math.min(pos+1,tab.length-1);const b=15+(trevo?12:0);pts+=b;trevo=false;$('msg').innerHTML=`🛡️ <b>SEGURO!</b> +${b} pontos`;desenha();$('rolar').disabled=false;jogando=false;};
+$('prox').onclick=()=>{$('fim').classList.add('hidden');fase=fase>=20?1:fase+1;novoTab();};
+$('loja').onclick=()=>{$('lojaM').classList.remove('hidden');$('ptsLoja').textContent=pts;};
+$('fechaL').onclick=()=>$('lojaM').classList.add('hidden');
+document.querySelectorAll('[data-i]').forEach(b=>b.onclick=()=>{
+  const custos={1:20,2:25,3:15,4:40,5:18}; const it=b.dataset.i; const p=custos[it];
+  if(pts<p){alert('Você precisa de '+p+' estrelas!');return;}
+  pts-=p;
+  if(it=='1'){dadoExtra=true;$('msg').innerHTML='🎲 Dado extra comprado!';}
+  if(it=='2'){escudo=true;$('msg').innerHTML='🛡️ Escudo ativado!';}
+  if(it=='3'){pos=Math.min(pos+2,tab.length-1);$('msg').innerHTML='🚀 Turbo!';desenha();}
+  if(it=='4'){if(vidas<3){vidas++;$('msg').innerHTML='💖 +1 vida!';}else{pts+=p;alert('Vidas cheias!');return;}}
+  if(it=='5'){trevo=true;$('msg').innerHTML='🍀 Trevo da sorte!';}
+  $('lojaM').classList.add('hidden'); desenha();
+});
+
+novoTab();
+</script>
 </body>
-</html>
+</html> 
