@@ -4,7 +4,7 @@
 
 Jogo de palavras estilo Wordscapes, feito em português do Brasil. Arraste as letras na roda e forme todas as palavras escondidas.
 
-🎮 **Jogar agora:** https://detiillimichel-max.github.io/letroso-cross/
+🎮 **Jogar agora:**
 
 ## ✨ Como funciona
 - Arraste o dedo ligando as letras na roda
